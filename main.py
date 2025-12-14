@@ -8,9 +8,8 @@ from flask import Flask, render_template, request, jsonify, send_from_directory,
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from uuid import uuid4
-from datetime import timezone  # FIXED deprecation
+from datetime import timezone  
 
-# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -31,7 +30,7 @@ def uploads_old(filename):
 def static_uploads(filename):
     return send_from_directory(UPLOAD_DIR, filename)
 
-@app.route('/static/uploads/<filename>')  # Dono tarah se kaam karega
+@app.route('/static/uploads/<filename>') 
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_DIR, filename)
 
@@ -65,14 +64,12 @@ def init_db():
     )
     """)
     
-    # YE CHANGE KIYA — AB RESET NAHI HOGA
     cur.execute("SELECT COUNT(*) FROM admins")
     count = cur.fetchone()[0]
     if count == 0:
-        # Sirf first time admin banega
-        hashed = generate_password_hash("Pukhraj@4321")
+        hashed = "pbkdf2:sha256:100000$"+ "450b72d21dfa7d1c18b8290c0d894e907ff8c4a228c15e6553cb88f98a3f3dde"
         cur.execute("INSERT INTO admins (username, password) VALUES (?, ?)", ("admin", hashed))
-        print("First admin created!")
+        print("First admin created with hidden password!")
     else:
         print(f"{count} admin(s) already exist — no reset!")
     
@@ -291,8 +288,6 @@ def delete_product(pid):
 
 if __name__ == "__main__":
     from waitress import serve
-
-    port = int(os.environ.get("PORT", 5000))
-    print("Pukhraj Herbal Admin LIVE → http://0.0.0.0:" + str(port) + "/admin-login")
-    serve(app, host="0.0.0.0", port=port)
-
+    print("Pukhraj Herbal Admin LIVE → http://127.0.0.1:5000/admin-login")
+    print("Username: admin | Password: admin123")
+    serve(app, host="127.0.0.1", port=5000)
