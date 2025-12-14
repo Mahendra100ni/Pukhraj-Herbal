@@ -292,9 +292,7 @@ def delete_product(pid):
 if __name__ == "__main__":
     from waitress import serve
 
-    host = "0.0.0.0" 
-    port = int(os.environ.get("PORT", 5000)) 
+    port = int(os.environ.get("PORT", 5000))
+    print("Pukhraj Herbal Admin LIVE → http://0.0.0.0:" + str(port) + "/admin-login")
+    serve(app, host="0.0.0.0", port=port)
 
-    print(f"Pukhraj Herbal Admin LIVE → http://{host}:{port}/admin-login")
-    print("Username: admin | Password: Pukhraj@4321")
-    serve(app, host=host, port=port)
