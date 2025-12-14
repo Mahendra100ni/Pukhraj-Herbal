@@ -290,8 +290,11 @@ def delete_product(pid):
         conn.close()
 
 if __name__ == "__main__":
-    # Fast server (no auto restart lag)
     from waitress import serve
-    print("Pukhraj Herbal Admin LIVE → http://127.0.0.1:5000/admin-login")
-    print("Username: admin | Password: admin123")
-    serve(app, host="127.0.0.1", port=5000)
+
+    host = "0.0.0.0" 
+    port = int(os.environ.get("PORT", 5000)) 
+
+    print(f"Pukhraj Herbal Admin LIVE → http://{host}:{port}/admin-login")
+    print("Username: admin | Password: Pukhraj@4321")
+    serve(app, host=host, port=port)
