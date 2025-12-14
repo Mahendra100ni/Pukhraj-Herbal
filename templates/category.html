@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pukhraj Herbal - Category</title>
+    <meta name="description" content="Explore our diverse range of herbal products across various categories at Pukhraj Herbal. Quality you can trust, naturally.">
+    <meta name="keywords" content="Pukhraj Herbal, Herbal Products, Herbal Extracts, Nutraceuticals, Carrier Oils, Essential Oils, Cosmetic Extracts, CO2 Extracts, Oil Soluble Extracts, Cattle Feed">
+    <link rel="icon" href="img/pukhraj logo hd.jpg" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        :root {
+            --primary: #0a6b3a;
+            --accent: #0eae5e;
+            --gold: #d4af37;
+            --dark: #09481a;
+            --wa-green: #128C7E;
+            --light: #f8fbf9;
+        }
+        body { margin:0; font-family:'Poppins',sans-serif; background:var(--light); color:#333; }
+        .categories-wrapper {max-width: 1250px;margin: 50px auto 30px;padding: 0 10px;}
+        .cat-heading {text-align: center;font-size: 28px;color: #094f2b;margin-bottom: 25px;font-weight: 700;}
+        .category-pills {overflow-x: auto;white-space: nowrap;scrollbar-width: none;padding-bottom: 10px;}
+        .category-pills::-webkit-scrollbar { display: none; }
+        .pill-container {display: inline-flex;gap: 18px;padding: 10px 0;flex-wrap: wrap;justify-content: center;max-height: 130px;overflow: hidden;}
+        .pill-item {padding: 12px 28px;border-radius: 50px;font-weight: 600;font-size: 15.5px;color: #444;cursor: pointer;transition: all 0.4s ease;text-transform: capitalize;background: #f5f5f5;box-shadow: 0 4px 6px rgba(0,0,0,0.08);flex-shrink: 0;}
+        .pill-item:hover {background: #e8f5ee;color: var(--accent);transform: translateY(-4px);box-shadow: 0 5px 25px rgba(14,174,94,0.25);}
+        .pill-item.active {background: linear-gradient(135deg, var(--accent), var(--primary));color: white;box-shadow: 0 4px 15px rgba(14,174,94,0.45);transform: translateY(-4px);}
+        .main-content { max-width: 1250px; margin: 20px auto; padding: 0 20px; }
+        .product-grid { background: rgb(255, 255, 255); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.209); display: grid; grid-template-columns: 1fr 1.1fr; position: relative; }
+        .product-grid:hover::before {transform: scale(1.08);box-shadow: 0 20px 50px rgba(14,174,94,0.4);border-color: #0a7d3a;}
+        .product-grid::before {content: 'PUKHRAJ HERBAL';position: absolute;top: 35px;left: 35px;background: white;color: #09481a;font-size: 12px;font-weight: 900; letter-spacing: 1.5px;text-transform: uppercase;padding: 8px 18px;border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);border: 3px solid #0eae5e;z-index: 10;pointer-events: none;backdrop-filter: blur(6px);transition: all 0.4s ease; }
+        .product-img { width: 100%; height: 560px; object-fit: cover; position: relative; border-radius: 20px 20px 20px 20px; left: 20px; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.198);}
+        .product-info { padding: 50px 45px; display: flex; flex-direction: column; justify-content: center; }
+        .product-info h1 { font-size: 36px; color: var(--dark); margin: 0 0 18px; font-weight: 800; line-height: 1.2; }
+        .short-desc { font-size: 17px; color: #555; line-height: 1.8; margin-bottom: 28px; }
+        .long-desc { background: #f9fffc; padding: 28px; border-radius: 16px; border-left: 6px solid var(--accent); font-size: 16px; line-height: 1.9; margin: 30px 0; color: #333; }
+        .price-tag { font-size: 15px; font-weight: 600; color: var(--accent); margin: 15px 0; }
+        .btn-group { display: flex; gap: 20px; flex-wrap: wrap; }
+        .btn { padding: 16px 44px; border-radius: 16px; font-size: 17px; font-weight: 600; text-align: center; min-width: 220px; transition: all 0.4s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.18); }
+        .btn-price { background: linear-gradient(135deg, var(--accent), var(--primary)); color: white; font-size: 22px; }
+        .btn-wa { background: var(--wa-green); color: white; }
+        .btn:hover { transform: translateY(-10px); box-shadow: 0 20px 45px rgba(0,0,0,0.3); }
+
+        .products-list { max-width: 1250px; margin: 50px auto; padding: 0 20px; }
+        .products-list h3 { font-size: 24px; color: var(--dark); margin-bottom: 20px; font-weight: 700; }
+        .product-names { display: flex; flex-wrap: wrap; gap: 14px; }
+        .pname { padding: 12px 24px; background: white; border-radius: 14px; font-weight: 500; color: #333; cursor: pointer; transition: all 0.35s; box-shadow: 0 4px 15px rgba(0,0,0,0.07); border: 1.5px solid #eee; position: relative; overflow: hidden; }
+        .pname:hover { background: #f0fdf4; color: var(--primary); border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(14,174,94,0.18); }
+        .pname::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: var(--accent); border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.6s ease, height 0.6s ease; z-index: 0; opacity: 0.15; }
+        .pname:active::before { width: 300px; height: 300px; }
+        .pname span { position: relative; z-index: 1; }
+        .pname.active { background: linear-gradient(135deg, var(--accent), var(--primary)); color: white; font-weight: 600; border: none; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(14,174,94,0.4); }
+
+        .cat-desc { max-width: 1250px; margin: 80px auto; padding: 20px; background: white; border-radius: 24px; box-shadow: 0 15px 50px rgba(0,0,0,0.241); border-top: 6px solid var(--gold); border-left: 6px solid var(--accent); }
+        .cat-desc h2 { color: var(--dark); font-size: 30px; margin-bottom: 20px; }
+        .cat-desc p { font-size: 17px; line-height: 1.9; color: #444; }
+
+        @media (max-width: 768px) { 
+            .product-grid { grid-template-columns: 1fr; } 
+            .product-img::after {font-size: 14px;padding: 10px 22px;bottom: 15px;right: 15px;letter-spacing: 2px;}
+            .product-img { height: 400px; border-radius: 24px 24px 0 0; } }
+        @media (max-width: 480px) { 
+            .product-info { padding: 35px 25px; } 
+            .product-info h1 { font-size: 30px; } 
+            .btn { min-width: 100%; } 
+            .btn-group { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+    <div class="nav-container top-nav">
+
+        <!-- LEFT: BRAND -->
+        <div class="nav-left">
+        <a class="brand" href="index.html">
+            <span class="logo"><img src="{{ url_for('static', filename='img/pukhraj logo hd.jpg') }}" alt="Logo"></span>
+            <div class="brand-text">
+            <span class="brand-title">Pukhraj Herbal</span><br>
+            <span class="brand-sub">Natural · Trusted · Effective</span>
+            </div>
+        </a>
+        </div>
+        
+
+        <!-- CENTER: NAV MENU -->
+        <div class="nav-center">
+            <nav class="main-nav">
+                <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li class="has-dropdown">
+                    <a href="products.html" class="active">Products <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                    <div id="navDynamic"></div>
+                    </ul>
+                </li>
+                <li><a href="Quality.html">Quality Assurance</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- RIGHT: SOCIAL ICONS + SEARCH -->
+        <div class="nav-right">
+            <!-- SOCIAL ICONS -->
+            <div class="social-icons">
+                <a href="#" class="social-link facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
+                    <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.08 5.66 21.18 10.44 21.95v-6.74H8.08v-2.9h2.36V9.41c0-2.33 1.39-3.61 3.52-3.61.99 0 2.03.18 2.03.18v2.23h-1.14c-1.12 0-1.47.7-1.47 1.42v1.7h2.5l-.4 2.9h-2.1V22C18.34 21.18 22 17.08 22 12.07z"/>
+                </svg>
+                </a>
+
+                <a href="https://www.instagram.com/pukhraj_herbal_mandsaur/" class="social-link instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="#fff" stroke-width="1.2"/>
+                    <path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6z" stroke="#fff" stroke-width="1.2"/>
+                    <circle cx="18.5" cy="5.5" r="0.8" fill="#fff"/>
+                </svg>
+                </a>
+
+                <a href="#" class="social-link youtube">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M23 7.2a3 3 0 0 0-2.1-2.1C19.2 4.5 12 4.5 12 4.5s-7.2 0-8.9.6A3 3 0 0 0 .9 7.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .9 4.8 3 3 0 0 0 2.1 2.1C4.8 19.5 12 19.5 12 19.5s7.2 0 8.9-.6a3 3 0 0 0 2.1-2.1A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.9-4.8z" fill="#fff"/>
+                    <path d="M9.8 15.1V8.9l5.3 3.1-5.3 3.1z" fill="#000"/>
+                </svg>
+                </a>
+            </div>
+
+            <!-- SEARCH BAR -->
+            <div class="search-wrapper">
+                <span class="search-icon-circle">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search..." autocomplete="off">
+                <div id="suggestionBox" class="suggestions"></div>
+            </div>
+        </div>
+        <button class="nav-toggle">&#9776;</button>
+    </div>
+    </header>
+
+    <div class="categories-wrapper">
+        <h3 class="cat-heading">Product Categories</h3>
+        <div class="category-pills">
+            <div class="pill-container" id="categoryPills"></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="product-grid" id="productDetail">
+            <div style="grid-column:1/-1; text-align:center; padding:150px 20px; color:#bbb; font-size:19px;">
+                Loading product...
+            </div>
+        </div>
+    </div>
+
+    <div class="products-list">
+        <h3>More Products in <span id="currentCatName">this category</span></h3>
+        <div class="product-names" id="productNamesList"></div>
+    </div>
+
+    <div class="cat-desc">
+        <h2 id="catDescTitle">Loading...</h2>
+        <p id="categoryDescription">Loading category description...</p>
+    </div>
+
+    <footer class="site-footer" style="background:#0a3d2a; color:#fff; padding:80px 10px;" data-aos="fade-up">
+        <div class="container footer-grid" style="grid-template-columns:1fr 1fr 1.3fr; gap:10px;">
+            <div class="footer-col">
+                <h4 style="color:#fff; font-size:15px;">Pukhraj Herbal</h4>
+                <p style="opacity:0.9; line-height:1.7; padding-top: 19px;">GMP Certified | Mandsaur, Madhya Pradesh</p>
+            </div>
+            <div class="footer-col">
+                <h5>Quick Links</h5>
+                <ul style="list-style:none; padding:0; margin:15px 0;">
+                    <li><a href="about.html" style="color:#ccc; text-decoration:none;">About Us</a></li>
+                    <li><a href="products.html" style="color:#ccc; text-decoration:none;">Products</a></li>
+                    <li><a href="gallery.html" style="color:#ccc; text-decoration:none;">Gallery</a></li>
+                    <li><a href="contact.html" style="color:#ccc; text-decoration:none;">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Contact</h5>
+                <p style="opacity:0.9; padding-top: 10px">
+            <strong>Email:</strong> pukhraj1207@gmail.com<br>
+            <strong>Call:</strong> +91 76940 11031, 94251 05058<br>
+            <strong>GST:</strong> 23ADDPP6014F1ZZ
+                </p>
+            </div>
+        </div>
+        <div class="container text-center" style="margin-top:40px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1);">
+            <p style="opacity:0.7; font-size:14px;">© 2025 Pukhraj Herbal. Made with Ayurvedic Love</p>
+        </div>
+    </footer>
+
+    <script>
+    const API = "http://127.0.0.1:5000/products";
+    let activeCat = "";
+    let activeId = null;
+
+    const CATEGORY_DESC = {
+        "herbal-extracts": "Herbal Extracts are concentrated forms of medicinal herbs that capture the plant’s active ingredients in their purest and most potent form...",
+        "nutraceutical-extracts": "Nutraceutical Extracts are natural bioactive compounds derived from plants and herbs...",
+        "herbs-powder": "Herbs Powders by Pukhraj Herbal are finely milled, natural herbal formulations...",
+        "carrier-oils": "Carrier Oils by Pukhraj Herbal are pure, cold-pressed, and unrefined oils...",
+        "essential-oils": "Essential Oils by Pukhraj Herbal are 100% pure, steam-distilled, and natural plant extracts...",
+        "cosmetic-extract": "Cosmetic & PG Extracts from Pukhraj Herbal are water-soluble herbal extracts...",
+        "co2-extract": "CO₂ Extracts from Pukhraj Herbal are obtained using supercritical CO₂ extraction...",
+        "oil-soluble": "Oil Soluble Extracts from Pukhraj Herbal are specially formulated to blend seamlessly...",
+        "cattle-feed": "Pukhraj Herbal offers a wide range of herbal feed formulations specially designed..."
+    };
+
+    function getImageUrl(img) {
+        if (!img || img.trim() === "") return "img/no-image.jpg";
+        return `http://127.0.0.1:5000/uploads/${img.trim()}`;
+    }
+
+    function readURLParams() {
+        const params = new URLSearchParams(window.location.search);
+        activeCat = params.get("cat") || "";
+        const idParam = params.get("id");
+        activeId = idParam ? parseInt(idParam) : null;
+    }
+
+    async function loadPage() {
+        readURLParams();
+
+        try {
+            const res = await fetch(API);
+            if (!res.ok) throw new Error("API not responding");
+            const data = await res.json();
+
+            const pillContainer = document.getElementById("categoryPills");
+            pillContainer.innerHTML = "";
+            Object.keys(data).forEach(cat => {
+                const div = document.createElement("div");
+                div.className = "pill-item" + (cat === activeCat ? " active" : "");
+                div.textContent = cat.replace(/-/g, " ").toUpperCase();
+                div.onclick = () => {
+                    window.location.href = `category.html?cat=${cat}`;
+                };
+                pillContainer.appendChild(div);
+            });
+
+            if (!activeCat && Object.keys(data).length > 0) {
+                activeCat = Object.keys(data)[0];
+                history.replaceState(null, null, `?cat=${activeCat}`);
+            }
+
+            const products = data[activeCat] || [];
+
+            if (products.length === 0) {
+                document.getElementById("productDetail").innerHTML = `<div style="text-align:center;padding:150px;color:#999;">No products in this category</div>`;
+                document.getElementById("productNamesList").innerHTML = "";
+                updateCategoryInfo();
+                return;
+            }
+
+            let product = products[0];
+            if (activeId) {
+                const found = products.find(p => p.id === activeId);
+                if (found) product = found;
+            }
+
+            const imgSrc = getImageUrl(product.image);
+
+            document.getElementById("productDetail").innerHTML = `
+                <img src="${imgSrc || '/static/img/no-image.jpg'}" 
+                    class="product-img" 
+                    onerror="this.onerror=null; this.src='/static/img/no-image.jpg';" 
+                    alt="${product.name}" 
+                    loading="lazy">
+                <div class="product-info">
+                    <h1>${product.name}</h1>
+                    <p class="short-desc">${product.description || "Premium quality herbal product."}</p>
+
+                    ${product.long_description ? `
+                        <div style="margin: 20px 0; font-size: 16px; line-height: 1.5; color: #333;">
+                            <strong style="font-size: 20px; color: var(--dark);">Product Specification:</strong><br><br>
+                            ${product.long_description.replace(/\n/g, '<br>')}
+                        </div>
+                    ` : ''}
+
+                    <div class="price-tag">${product.price || "Contact for Best Price"}</div>
+                    <div class="btn-group">
+                        <a href="contact.html" class="btn btn-price">Get Price</a>
+                        <a href="https://wa.me/917694011031?text=Hi, I'm interested in ${encodeURIComponent(product.name)}" 
+                        class="btn btn-wa" target="_blank">WhatsApp Now</a>
+                    </div>
+                </div>
+            `;
+
+            const list = document.getElementById("productNamesList");
+            list.innerHTML = "";
+            products.forEach(p => {
+                const div = document.createElement("div");
+                div.className = "pname" + (p.id === product.id ? " active" : "");
+                div.innerHTML = `<span>${p.name}</span>`;
+                div.style.cursor = "pointer";
+                div.onclick = (e) => {
+                    e.stopPropagation();
+                    window.location.href = `category.html?cat=${activeCat}&id=${p.id}`;
+                };
+                list.appendChild(div);
+            });
+
+            updateCategoryInfo();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        } catch (err) {
+            console.error(err);
+            document.getElementById("productDetail").innerHTML = 
+                `<div style="text-align:center;padding:100px;color:red;font-size:18px;">
+                    Failed to load products<br><small>Check if server is running</small>
+                </div>`;
+        }
+    }
+
+    function updateCategoryInfo() {
+        const name = (activeCat || "Products").replace(/-/g, " ").toUpperCase();
+        document.getElementById("catDescTitle").textContent = name;
+        document.getElementById("categoryDescription").textContent = CATEGORY_DESC[activeCat] || "Explore our premium herbal products.";
+        document.getElementById("currentCatName").textContent = name;
+    }
+
+    window.addEventListener("load", loadPage);
+    window.addEventListener("popstate", loadPage);
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/aos-custom.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Quality Assurance | Pukhraj Herbal</title>
+    <meta name="description" content="GMP, ISO 14001:2004 certified. Rigorous testing, traceability, and global standards in every herbal product." />
+    <meta name="keywords" content="GMP certified herbal products, ISO 14001 herbal manufacturer, quality assurance herbal extracts, herbal product testing, traceability in herbal manufacturing, global standards herbal products" />
+    <meta name="theme-color" content="#07964e">
+    <link rel="canonical" href="https://pukhrajherbal.com/quality.html"/>
+    <link rel="icon" href="img/pukhraj logo hd.jpg" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+
+        /* HERO */
+        .hero h1{font-size:72px;font-weight:700;}
+        .hero p{font-size:22px;margin-top:12px;opacity:0.9;}
+
+        /* PROCESS */
+        .process{padding:80px 0;}
+        .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;text-align:center;}
+        .step{background:#fff;padding:30px;border-radius:20px;box-shadow:0 8px 25px rgba(0,0,0,0.08);}
+        .step h3{color:var(--g);margin:15px 0 10px;font-size:20px;}
+        .num{width:50px;height:50px;background:var(--g);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;
+              margin:auto;font-size:22px;font-weight:700;}
+
+        /* VIDEO + REPORT */
+        .proof{padding:60px 0;background:var(--l);}
+        .flex{display:flex;gap:40px;flex-wrap:wrap;align-items:center;justify-content:center;}
+        .video{border-radius:20px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.2);}
+        .report{background:#fff;padding:30px;border-radius:20px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.1);}
+        .btn{background:var(--g);color:#fff;padding:14px 30px;border:none;border-radius:50px;font-weight:600;
+             text-decoration:none;display:inline-block;margin-top:15px;transition:0.3s;}
+        .btn:hover{background:#05663a;transform:translateY(-3px);}
+
+        /* TRUST */
+        .trust{padding:60px 0;text-align:center;background:#fff;}
+        .trust h2{font-size:38px;color:var(--g);}
+        .badges img{ width: 160px; height: 160px; border-radius: 10%; object-fit: contain; }
+
+        .step {
+            background: #0eae5e;
+            color: white;
+            width: 220px;
+            height: 140px;
+            border-radius: 10px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.354);
+        }
+
+        .arrow {
+            font-size: 34px;
+            color: #ffffff;
+        }
+
+        /* Responsive tweak */
+        @media (max-width: 768px) {
+            .flowchart {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+    <div class="nav-container top-nav">
+
+        <!-- LEFT: BRAND -->
+        <div class="nav-left">
+        <a class="brand" href="index.html">
+            <span class="logo"><img src="{{ url_for('static', filename='img/pukhraj logo hd.jpg') }}" alt="Logo"></span>
+            <div class="brand-text">
+            <span class="brand-title">Pukhraj Herbal</span><br>
+            <span class="brand-sub">Natural · Trusted · Effective</span>
+            </div>
+        </a>
+        </div>
+
+        <!-- CENTER: NAV MENU -->
+        <div class="nav-center">
+        <nav class="main-nav">
+            <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li class="has-dropdown">
+                <a href="products.html">Products <span class="dropdown-arrow">▼</span></a>
+                <ul class="dropdown-menu">
+                <div id="navDynamic"></div>
+                </ul>
+            </li>
+            <li><a href="Quality.html" class="active">Quality Assurance</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        </div>
+
+        <!-- RIGHT: SOCIAL ICONS + SEARCH -->
+        <div class="nav-right">
+            <!-- SOCIAL ICONS -->
+            <div class="social-icons">
+                <a href="#" class="social-link facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
+                    <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.08 5.66 21.18 10.44 21.95v-6.74H8.08v-2.9h2.36V9.41c0-2.33 1.39-3.61 3.52-3.61.99 0 2.03.18 2.03.18v2.23h-1.14c-1.12 0-1.47.7-1.47 1.42v1.7h2.5l-.4 2.9h-2.1V22C18.34 21.18 22 17.08 22 12.07z"/>
+                </svg>
+                </a>
+
+                <a href="https://www.instagram.com/pukhraj_herbal_mandsaur/" class="social-link instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="#fff" stroke-width="1.2"/>
+                    <path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6z" stroke="#fff" stroke-width="1.2"/>
+                    <circle cx="18.5" cy="5.5" r="0.8" fill="#fff"/>
+                </svg>
+                </a>
+
+                <a href="#" class="social-link youtube">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M23 7.2a3 3 0 0 0-2.1-2.1C19.2 4.5 12 4.5 12 4.5s-7.2 0-8.9.6A3 3 0 0 0 .9 7.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .9 4.8 3 3 0 0 0 2.1 2.1C4.8 19.5 12 19.5 12 19.5s7.2 0 8.9-.6a3 3 0 0 0 2.1-2.1A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.9-4.8z" fill="#fff"/>
+                    <path d="M9.8 15.1V8.9l5.3 3.1-5.3 3.1z" fill="#000"/>
+                </svg>
+                </a>
+            </div>
+            <!-- SEARCH BAR -->
+            <div class="search-wrapper">
+                <span class="search-icon-circle">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search..." autocomplete="off">
+                <div id="suggestionBox" class="suggestions"></div>
+            </div>
+        </div>
+        <button class="nav-toggle">&#9776;</button>
+    </div>
+    </header>
+
+
+    <!-- HERO -->
+    <section style="height:55vh;background:linear-gradient(rgba(0, 0, 0, 0.419),rgba(0, 0, 0, 0.463)),url('img/oil 2.jpg') center/cover no-repeat fixed;display:flex;align-items:center;text-align:center;color:#fff;">
+        <div class="container">
+        <div class="hero-grid">
+            <div>
+                <span class="eyebrow">GMP · ISO 14001:2004</span>
+                <h1 class="hero" style="text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.463);">Uncompromising Quality Standards</h1>
+                <p class="hero" style="text-shadow: 0 2px 5px rgba(0, 0, 0, 0.463);">
+                    From farm to final product — every step is monitored, tested, and certified for purity, potency, and safety.
+                </p>
+            </div>
+            <div>
+                <h4>Quality Testing at Pukhraj Herbal</h4>
+            </div>
+        </div>
+        </div>
+    </section>
+
+<!-- 7 CERTIFICATES -->
+    <section style="padding:70px 0; background:#f8fff9; text-align:center;" >
+    <div class="container" data-aos="fade">
+        <h2 style="font-size:38px; color:#07964e; margin-bottom:50px; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.234);">Our Certifications</h2>
+        <div style="display:flex; gap:40px; justify-content:center; flex-wrap:wrap; align-items:center;">
+        <!-- LOGO 1 -->
+        <div class="cert-circle">
+            <img src="{{ url_for('static', filename='img/product img/cert/fassi logo.png') }}" alt="FSSAI">
+        </div>
+        <!-- LOGO 2 -->
+        <div class="cert-circle">
+            <img src="{{ url_for('static', filename='img/product img/cert/iso logo.png') }}" alt="ISO">
+        </div>
+        <!-- LOGO 3 -->
+        <div class="cert-circle">
+            <img src="{{ url_for('static', filename='img/product img/cert/gmp logo.png') }}" alt="GMP">
+        </div>
+        <!-- LOGO 4 -->
+        <div class="cert-circle">
+            <img src="{{ url_for('static', filename='img/product img/cert/ayush logo.png') }}" alt="AYUSH">
+        </div>
+        <!-- LOGO 5 -->
+        <div class="cert-circle">
+            <img src="{{ url_for('static', filename='img/product img/cert/msme logo.png') }}" alt="MSME">
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- 5-STEP PROCESS -->
+    <section style="margin-top: 50px; margin-bottom: 50px; padding: 70px 0; background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.5)), url('img/herbal\ powder.jpg') center/cover no-repeat fixed;">
+    <div class="container" data-aos="fade-up">
+        <h2 style="font-size:35px; color:#ffffff; margin-bottom:70px; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.365);text-align: center;">How Do We Prepare Herbal Extract Powder</h2>
+        <div class="flowchart" style="display:flex; gap:10px; justify-content:center; align-items:center;box-sizing:content-box; margin: 0;padding: 0;">
+            <div class="step">Harvest and Prepare the Herb</div>
+            <div class="arrow">➜</div>
+            <div class="step">Extraction of Active Compounds</div>
+            <div class="arrow">➜</div>
+            <div class="step">Strain the Extract</div>
+            <div class="arrow">➜</div>
+            <div class="step">Evaporate the Solvent (concentration)</div>
+            <div class="arrow">➜</div>
+            <div class="step">Grinding into Powder</div>
+            <div class="arrow">➜</div>
+            <div class="step">Storage</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- VIDEO + LAB REPORT -->
+    <!-- <section class="proof">
+        <div class="c">
+            <div class="flex">
+                <div class="video">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID" 
+                            frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="report">
+                    <h3>Download Lab Report</h3>
+                    <p>Shilajit Gold - Batch #PK2025</p>
+                    <a href="pdf/lab-report.pdf" class="btn" download>Download PDF</a>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- TRUST BADGES -->
+    <section class="trust" data-aos="fade-up">
+        <h2>1 Crore+ Happy Customers</h2>
+        <div class="badges" style="display:flex;justify-content:center;gap:100px;flex-wrap:wrap;align-items:center;margin-top:30px;">
+            <img src="{{ url_for('static', filename='img/product img/trust/happy.jpg') }}" alt="1 Crore">
+            <img src="{{ url_for('static', filename='img/product img/trust/5star.jpg') }}" alt="5 Star">
+            <img src="{{ url_for('static', filename='img/product img/trust/zero rejection.jpg') }}" alt="Zero Rejection">
+        </div>
+    </section>
+
+    <!-- WhatsApp -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/917694011031?text=Hi%20Pukhraj%20Herbal,%20I%20want%20to%20discuss%20bulk%20supply" target="_blank" rel="noopener">
+        <img src="{{ url_for('static', filename='img/product img/whatsapp.png') }}" alt="WhatsApp" loading="lazy">
+        </a>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" title="Go to top">↑</button>
+
+    <!-- FOOTER -->
+    <footer class="site-footer" style="background:#0a3d2a; color:#fff; padding:80px 10px;">
+        <div class="container footer-grid" style="grid-template-columns:1fr 1fr 1.3fr; gap:10px;">
+        <div class="footer-col">
+            <h4 style="color:#fff; font-size:15px;">Pukhraj Herbal</h4>
+            <p style="opacity:0.9; line-height:1.7; padding-top: 19px;" >GMP Certified Manufacturer of Herbal Extracts,
+                Essential Oils & Ayurvedic Products from Mandsaur, MP.</p>
+        </div>
+        <div class="footer-col">
+            <h5>Quick Links</h5>
+            <ul class="footer-links">
+            <ul style="list-style:none; padding:0; margin:15px 0;">
+            <li><a href="about.html" style="color:#ccc; text-decoration:none;">About Us</a></li>
+            <li><a href="products.html" style="color:#ccc; text-decoration:none;">Products</a></li>
+            <li><a href="gallery.html" style="color:#ccc; text-decoration:none;">Gallery</a></li>
+            <li><a href="contact.html" style="color:#ccc; text-decoration:none;">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Contact</h5>
+            <p style="opacity:0.9; padding-top: 10px">
+            <strong>Email:</strong> pukhraj1207@gmail.com<br>
+            <strong>Call:</strong> +91 76940 11031, 94251 05058<br>
+            <strong>GST:</strong> 23ADDPP6014F1ZZ
+            </p>
+        </div>
+        <div class="container text-center" style="margin-top:40px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1);">
+            <p style="opacity:0.7; font-size:14px;">© 2025 Pukhraj Herbal. Made with care • Terms • Privacy</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const toggle = document.querySelector(".nav-toggle");
+        const navList = document.querySelector(".nav-list");
+
+        // Hamburger Toggle
+        toggle.addEventListener("click", () => {
+        toggle.classList.toggle("active");
+        navList.classList.toggle("open");
+        });
+
+        // Dropdown Toggle (Mobile Only)
+        document.querySelectorAll(".has-dropdown > a").forEach(trigger => {
+        trigger.addEventListener("click", function(e) {
+            if (window.innerWidth <= 820) {
+            e.preventDefault();
+            e.stopPropagation();
+            title.parentElement.classList.toggle("active");
+            }
+        });
+        });
+
+        // Toggle tree-sub (inside dropdown)
+        document.querySelectorAll(".tree-title").forEach(title => {
+        title.addEventListener("click", function(e) {
+            if (window.innerWidth <= 820) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.parentElement.classList.toggle("active");
+            }
+        });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener("click", (e) => {
+        if (!e.target.closest(".nav-container")) {
+            navList.classList.remove("open");
+            document.querySelectorAll(".has-dropdown").forEach(d => d.classList.remove("active"));
+        }
+        });
+    });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/aos-custom.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pukhraj Herbal - Admin</title>
+<link rel="icon" href="data:,">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    :root{--p:#0eae5e;--grad:linear-gradient(135deg,#0eae5e,#00d4aa);--bg:#f8fff9;--card:#ffffff;--text:#1a1a1a;--border:#e0e0e0;--shadow:0 15px 40px rgba(0,0,0,0.1);}
+    [data-theme="dark"]{--bg:#0a0a0a;--card:#111;--text:#eee;--border:#333;--shadow:0 15px 40px rgba(0,0,0,0.6);}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+    body{background:var(--bg);color:var(--text);transition:0.4s;min-height:100vh;}
+    .header{background:var(--grad);color:#fff;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 10px 30px rgba(14,174,94,0.3);}
+    .header h1{font-size:28px;font-weight:900;letter-spacing:2px;background:linear-gradient(90deg,#fff,#ccffcc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .controls{display:flex;gap:18px;align-items:center;}
+    .user-btn{background:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.3);color:#fff;padding:10px 18px;border-radius:50px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:8px;}
+    .dropdown{position:absolute;top:120%;right:0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:10px;width:200px;box-shadow:var(--shadow);opacity:0;visibility:hidden;transition:0.3s;transform:translateY(-10px);}
+    .dropdown.show{opacity:1;visibility:visible;transform:translateY(0);}
+    .dropdown a{display:block;padding:12px 16px;color:var(--text);text-decoration:none;border-radius:12px;transition:0.3s;}
+    .dropdown a:hover{background:rgba(14,174,94,0.15);color:var(--p);}
+    .container{max-width:1600px;margin:100px auto 50px;padding:0 40px;display:grid;grid-template-columns:420px 1fr;gap:40px;}
+    .sidebar{background:var(--card);border-radius:24px;padding:30px;box-shadow:var(--shadow);position:sticky;top:110px;height:fit-content;}
+    .search{position:relative;margin-bottom:25px;}
+    .search input{width:100%;padding:16px 50px;border:none;border-radius:50px;background:rgba(14,174,94,0.08);font-size:16px;transition:0.3s;}
+    .search input:focus{outline:none;box-shadow:0 0 0 4px rgba(14,174,94,0.2);}
+    .search i{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--p);}
+    .new-btn{width:100%;background:var(--grad);color:#fff;padding:18px;border:none;border-radius:50px;font-weight:800;font-size:18px;cursor:pointer;margin-bottom:25px;box-shadow:0 12px 30px rgba(14,174,94,0.4);transition:0.4s;}
+    .new-btn:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(14,174,94,0.5);}
+    .list{max-height:70vh;overflow-y:auto;padding-right:8px;}
+    .list::-webkit-scrollbar{width:8px;}
+    .list::-webkit-scrollbar-thumb{background:rgba(14,174,94,0.3);border-radius:50px;}
+    .item{display:flex;gap:16px;padding:16px;border-radius:20px;cursor:pointer;background:rgba(14,174,94,0.05);margin-bottom:12px;transition:0.4s;align-items:center;}
+    .item:hover{background:rgba(14,174,94,0.12);transform:translateX(6px);}
+    .item.active{background:var(--grad);color:#fff;}
+    .item img{width:70px;height:70px;object-fit:cover;border-radius:14px;border:3px solid #fff;box-shadow:0px 8px 20px rgba(0,0,0,0.2);}
+    .main{background:var(--card);border-radius:24px;padding:40px;box-shadow:var(--shadow);}
+    .title{font-size:32px;font-weight:900;margin-bottom:35px;text-align:center;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .grid{display:grid;grid-template-columns:1fr 500px;gap:50px;}
+    .form{background:var(--card);border-radius:20px;padding:35px;box-shadow:0 10px 30px rgba(0,0,0,0.08);}
+    .fg{margin-bottom:28px;}
+    label{display:block;margin-bottom:10px;font-weight:700;color:var(--p);text-transform:uppercase;font-size:14px;letter-spacing:1px;}
+    input,textarea{width:100%;padding:16px 20px;border:2px solid var(--border);border-radius:18px;background:transparent;font-size:16px;transition:0.4s;}
+    input:focus,textarea:focus{border-color:var(--p);box-shadow:0 0 0 5px rgba(14,174,94,0.15);outline:none;background:rgba(14,174,94,0.05);}
+    textarea{min-height:140px;resize:vertical;}
+    .upload{border:3px dashed var(--border);border-radius:20px;padding:45px;text-align:center;cursor:pointer;background:rgba(14,174,94,0.02);transition:0.4s;}
+    .upload:hover{border-color:var(--p);background:rgba(14,174,94,0.08);}
+    .upload.dragover{background:rgba(14,174,94,0.15);border-color:var(--p);}
+    .upload i{font-size:55px;color:var(--p);margin-bottom:15px;}
+    .preview-img{max-width:100%;border-radius:18px;margin-top:20px;display:none;box-shadow:0 15px 35px rgba(0,0,0,0.2);}
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:20px;}
+    .gcard{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,0.18);cursor:move;}
+    .gcard img{width:100%;height:150px;object-fit:cover;}
+    .remove{position:absolute;top:10px;right:10px;background:#e74c3c;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;opacity:0;transition:0.3s;}
+    .gcard:hover .remove{opacity:1;}
+    .btns{margin-top:40px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+    .btn{padding:16px 36px;border:none;border-radius:50px;font-weight:800;font-size:17px;cursor:pointer;transition:0.4s;}
+    .save{background:var(--grad);color:#fff;box-shadow:0 15px 35px rgba(14,174,94,0.4);}
+    .save:hover{transform:translateY(-5px);}
+    .del{background:#e74c3c;color:#fff;}
+    .res{background:#666;color:#fff;}
+    .live{background:var(--card);border-radius:24px;padding:40px;text-align:center;box-shadow:var(--shadow);}
+    .live h3{font-size:28px;font-weight:900;margin-bottom:25px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .live-img{max-width:100%;height:420px;object-fit:cover;border-radius:24px;box-shadow:0 20px 50px rgba(0,0,0,0.25);}
+    .live-title{font-size:32px;font-weight:900;margin:25px 0;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .live-desc{font-size:18px;line-height:1.8;opacity:0.9;max-width:600px;margin:0 auto;}
+    .toast{position:fixed;bottom:30px;right:30px;background:#28a745;color:#fff;padding:16px 32px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.3);opacity:0;transform:translateY(50px);transition:0.4s;z-index:9999;}
+    .toast.show{opacity:1;transform:translateY(0);}
+    .switch{position:relative;display:inline-block;width:60px;height:34px;}
+    .switch input{opacity:0;width:0;height:0;}
+    .slider{position:absolute;cursor:pointer;inset:0;background:#ccc;border-radius:34px;transition:.4s;}
+    .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background:white;border-radius:50%;transition:.4s;}
+    input:checked + .slider{background:var(--p);}
+    input:checked + .slider:before{transform:translateX(26px);}
+    /* Latest Product Highlight */
+    .item.latest {
+        border-left: 5px solid gold;
+        background: linear-gradient(90deg, rgba(255,215,0,0.12) 0%, rgba(14,174,94,0.05) 100%);
+        position: relative;
+    }
+
+    .item.latest::after {
+        content: "★";
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        font-size: 24px;
+        color: gold;
+        text-shadow: 0 0 10px rgba(255,215,0,0.6);
+        animation: glow 2s infinite alternate;
+    }
+
+    .item.latest.active {
+        background: var(--grad);
+    }
+
+    .item.latest.active::after {
+        color: #fff;
+        text-shadow: 0 0 15px rgba(255,255,255,0.8);
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 10px rgba(255,215,0,0.6); }
+        to { text-shadow: 0 0 20px rgba(255,215,0,1); }
+    }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>PUKHRAJ HERBAL</h1>
+    <div class="controls">
+        <div style="position:relative;">
+            <button class="user-btn" id="userBtn">Admin</button>
+            <div class="dropdown" id="dropdown">
+                <a href="/">Logout</a>
+            </div>
+        </div>
+        <button onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'" style="background:none;border:none;color:#fff;font-size:24px;cursor:pointer;" title="Toggle Dark Mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        <div class="search">
+            <input type="text" id="search" placeholder="Search products...">
+            <i class="fas fa-search"></i>
+        </div>
+        <button class="new-btn" id="newBtn">+ ADD NEW PRODUCT</button>
+        <div class="list" id="list"></div>
+    </div>
+
+    <div class="main">
+        <h2 class="title" id="title">Add New Product</h2>
+        <div class="grid">
+            <div class="form">
+                <div class="fg"><label>Product Name</label><input type="text" id="name" placeholder="Enter powerful name"></div>
+                <div class="fg"><label>Short Description</label><textarea id="desc" placeholder="For product card"></textarea></div>
+                <div class="fg"><label>Full Details</label><textarea id="spec" placeholder="Benefits, purity, uses..."></textarea></div>
+                <div class="fg">
+                    <label>Category</label>
+                    <div style="position:relative;">
+                        <select id="cat" style="width:100%;padding:16px 20px;border:2px solid var(--border);border-radius:18px;background:transparent;font-size:16px;transition:all 0.4s;appearance:none;cursor:pointer;">
+                            <option value="herbal-extracts">Herbal Extracts</option>
+                            <option value="nutraceutical-extracts">Nutraceutical Extract</option>
+                            <option value="herbs-powder">Herbs Powder</option>
+                            <option value="essential-oils">Essential Oils</option>
+                            <option value="carrier-oils">Carrier Oils</option>
+                            <option value="cosmetic-and-pg-extract">Cosmetic and PG Extract</option>
+                            <option value="co2-extract-and-oil">CO2 Extract and Oil</option>
+                            <option value="oil-soluble-extract">Oil Soluble Extract</option>
+                            <option value="cattle-and-poultry-feed">Cattle and Poultry Feed</option>
+                        </select>
+                        <!-- Custom Arrow -->
+                        <i class="fas fa-chevron-down" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--p);pointer-events:none;font-size:14px;transition:0.3s;"></i>
+                    </div>
+                </div>
+                
+                <div class="fg">
+                    <label>Main Image</label>
+                    <div class="upload" id="mainUp">Drop image or click<input type="file" id="mainIn" accept="image/*" hidden></div>
+                    <img id="mainPrev" class="preview-img">
+                </div>
+                
+                <div class="fg">
+                    <label>Gallery Images</label>
+                    <div class="upload" id="galUp">Drop multiple images<input type="file" id="galIn" accept="image/*" multiple hidden></div>
+                    <div class="gallery" id="gal"></div>
+                </div>
+                
+                <div class="fg"><label>Latest Product</label>
+                    <label class="switch"><input type="checkbox" id="latest"><span class="slider"></span></label>
+                </div>
+                
+                <div class="btns">
+                    <button class="btn save" id="save">SAVE PRODUCT</button>
+                    <button class="btn res" id="res">RESET FORM</button>
+                    <button class="btn del" id="del" style="display:none">DELETE PRODUCT</button>
+                </div>
+            </div>
+            
+            <div class="live">
+                <h3>Live Preview</h3>
+                <img id="liveImg" class="live-img" src="https://via.placeholder.com/600x600/0eae5e/ffffff?text=PUKHRAJ+HERBAL">
+                <div class="live-title" id="liveName">Your Product Name</div>
+                <div class="live-desc" id="liveDesc">Description appears as you type...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = "http://127.0.0.1:5000";
+let products = {}, selected = null;
+
+// Toast
+function toast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+// Safe image loader
+function loadImg(el, src) {
+    if (!src) src = "https://via.placeholder.com/600x600.png?text=No+Image";
+    const img = new Image();
+    img.onload = () => el.src = src;
+    img.onerror = () => el.src = "https://via.placeholder.com/600x600.png?text=No+Image";
+    img.src = src;
+}
+
+// Load products
+async function load() {
+    try {
+        const res = await fetch(`${API}/products`, {cache: "no-store"});
+        if (!res.ok) throw "";
+        products = await res.json();
+        render();
+    } catch { setTimeout(load, 2000); }
+}
+
+// Render list
+function render() {
+    const list = document.getElementById("list");
+    const term = document.getElementById("search").value.toLowerCase();
+    list.innerHTML = "";
+    Object.values(products).flat().sort((a,b)=> (b.id||0)-(a.id||0)).forEach(p => {
+        if (!p.name.toLowerCase().includes(term)) return;
+        const div = document.createElement("div");
+        div.className = "item" + 
+            (selected?.id===p.id ? " active" : "") + 
+            (p.is_latest ? " latest" : "");
+        div.onclick = () => select(p);
+        div.innerHTML = `
+            <img src="${p.image ? API + '/static/uploads/' + p.image : 'https://via.placeholder.com/80?text=?'}"
+                 onerror="this.src='https://via.placeholder.com/80?text=?'">
+            <div>
+                <b>${p.name}</b><br>
+                <small>${p.category} ${p.is_latest?'Latest':''}</small>
+            </div>`;
+        list.appendChild(div);
+    });
+}
+
+// Select product
+function select(p) {
+    selected = p;
+    document.getElementById("title").textContent = "Edit Product";
+    document.getElementById("name").value = p.name;
+    document.getElementById("desc").value = p.description || "";
+    document.getElementById("spec").value = p.long_description || "";
+    document.getElementById("cat").value = p.category;
+    document.getElementById("latest").checked = p.is_latest;
+    document.getElementById("del").style.display = "inline-block";
+
+    const imgUrl = p.image ? API + "/static/uploads/" + p.image : "";
+    loadImg(document.getElementById("mainPrev"), imgUrl);
+    document.getElementById("mainPrev").style.display = p.image ? "block" : "none";
+    loadImg(document.getElementById("liveImg"), imgUrl);
+
+    const gal = document.getElementById("gal"); gal.innerHTML = "";
+    p.images = typeof p.images === "string" ? JSON.parse(p.images || "[]") : p.images || [];
+    p.images.forEach((img, i) => {
+        const card = document.createElement("div"); card.className="gcard";
+        const im = document.createElement("img");
+        loadImg(im, API + "/static/uploads/" + img);
+        const rem = document.createElement("div"); rem.className="remove"; rem.innerHTML="×";
+        rem.onclick = e => { e.stopPropagation(); p.images.splice(i,1); select(p); };
+        card.appendChild(im); card.appendChild(rem);
+        gal.appendChild(card);
+    });
+    preview();
+}
+
+// Live preview
+function preview() {
+    document.getElementById("liveName").textContent = document.getElementById("name").value || "Your Product Name";
+    document.getElementById("liveDesc").textContent = document.getElementById("desc").value || "Description...";
+}
+["name","desc","spec","cat"].forEach(id => document.getElementById(id).oninput = preview);
+
+// Upload setup
+function uploadSetup(zone, inputId, gallery=false) {
+    const zoneEl = document.getElementById(zone);
+    const input = document.getElementById(inputId);
+    zoneEl.onclick = () => input.click();
+    
+    ["dragenter","dragover"].forEach(e => zoneEl.addEventListener(e, () => zoneEl.classList.add("dragover")));
+    ["dragleave","drop"].forEach(e => zoneEl.addEventListener(e, () => zoneEl.classList.remove("dragover")));
+    zoneEl.addEventListener("drop", e => { e.preventDefault(); input.files = e.dataTransfer.files; input.dispatchEvent(new Event('change')); });
+    
+    input.onchange = async () => {
+        for (const file of input.files) {
+            // Local preview
+            const reader = new FileReader();
+            reader.onload = e => {
+                if (!gallery) {
+                    document.getElementById("mainPrev").src = e.target.result;
+                    document.getElementById("mainPrev").style.display = "block";
+                    document.getElementById("liveImg").src = e.target.result;
+                } else {
+                    const card = document.createElement("div"); card.className="gcard";
+                    const img = document.createElement("img"); img.src = e.target.result;
+                    card.appendChild(img);
+                    document.getElementById("gal").appendChild(card);
+                }
+            };
+            reader.readAsDataURL(file);
+
+            // Upload
+            const form = new FormData();
+            form.append("file", file);  // Yeh "file" naam se bhej raha hai
+            const res = await fetch(`${API}/upload`, {method:"POST", body:form});
+            const data = await res.json();
+            if (data.url) {
+                const fname = data.url.split('/').pop();
+                if (gallery) {
+                    if (!selected) selected = {};
+                    if (!selected.images) selected.images = [];
+                    selected.images.push(fname);
+                } else {
+                    if (!selected) selected = {};
+                    selected.image = fname;
+                }
+            }
+        }
+        if (gallery) select(selected);
+    };
+}
+uploadSetup("mainUp", "mainIn");
+uploadSetup("galUp", "galIn", true);
+
+// Save
+document.getElementById("save").onclick = async () => {
+    const payload = {
+        name: document.getElementById("name").value.trim(),
+        description: document.getElementById("desc").value,
+        long_description: document.getElementById("spec").value,
+        category: document.getElementById("cat").value.trim(),
+        is_latest: document.getElementById("latest").checked ? 1 : 0,
+        image: selected?.image || "",
+        images: selected?.images || []
+    };
+    if (!payload.name || !payload.category) return toast("Name & Category required!");
+
+    const method = selected?.id ? "PUT" : "POST";
+    const url = selected?.id ? `${API}/products/${selected.id}` : `${API}/products`;
+
+    const res = await fetch(url, {
+        method,
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+        toast(selected?.id ? "Product Updated!" : "Product Added!");
+        
+        // FORM PURA KHALI KAR DO
+        selected = null;
+        document.getElementById("title").textContent = "Add New Product";
+        document.getElementById("name").value = "";
+        document.getElementById("desc").value = "";
+        document.getElementById("spec").value = "";
+        document.getElementById("cat").value = "";  // Dropdown bhi khali
+        document.getElementById("latest").checked = false;
+        document.getElementById("mainPrev").style.display = "none";
+        document.getElementById("mainPrev").src = "";
+        document.getElementById("liveImg").src = "https://via.placeholder.com/600x600/0eae5e/ffffff?text=PUKHRAJ+HERBAL";
+        document.getElementById("gal").innerHTML = "";
+        document.getElementById("del").style.display = "none";
+        
+        load();  // List refresh
+        preview();  // Live preview reset
+    } else {
+        toast("Save failed!");
+    }
+};
+
+// Delete
+document.getElementById("del").onclick = async () => {
+    if (!confirm("Delete this product?")) return;
+    await fetch(`${API}/products/${selected.id}`, {method: "DELETE"});
+    toast("Deleted!");
+    selected = null; load();
+    document.getElementById("title").textContent = "Add New Product";
+    document.getElementById("del").style.display = "none";
+};
+
+// Reset & New
+["res","newBtn"].forEach(id => document.getElementById(id).onclick = () => {
+    selected = null;
+    load();
+    document.getElementById("title").textContent = "Add New Product";
+    document.getElementById("del").style.display = "none";
+    document.getElementById("mainPrev").style.display = "none";
+    document.getElementById("gal").innerHTML = "";
+});
+
+// Search
+document.getElementById("search").oninput = render;
+
+// User menu
+document.getElementById("userBtn").onclick = () => document.getElementById("dropdown").classList.toggle("show");
+document.addEventListener("click", e => {
+    if (!e.target.closest("#userBtn")) document.getElementById("dropdown").classList.remove("show");
+});
+
+// Start
+load();
+</script>
+</body>
+</html>

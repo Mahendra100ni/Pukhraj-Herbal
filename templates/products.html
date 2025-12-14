@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Products | Pukhraj Herbal</title>
+    <meta name="description" content="Explore 50+ GMP certified herbal extracts & ayurvedic products from Mandsaur." />
+    <meta name="keywords" content="herbal extracts, essential oils, ayurvedic products, GMP certified, bulk herbal supplier, natural wellness, herbal export India" />
+    <meta name="theme-color" content="#07964e">
+    <link rel="canonical" href="https://pukhrajherbal.com/products.html"/>
+    <link rel="icon" href="img/pukhraj logo hd.jpg" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+    /* -------------------------
+    Option A: Paper + 3D Floating Image
+    ------------------------- */
+        :root{
+        --accent:#0eae5e;
+        --paper:#fcfff9;
+        --muted:#6b6b6b;
+        --card-radius:16px;
+        --shadow-1: 0 8px 18px rgba(8,24,16,0.06);
+        --shadow-2: 0 18px 40px rgba(6,20,12,0.08);
+        }
+
+        #dynamic-products{ padding:24px 6%; }
+        .filter-container{ display:flex; justify-content:center; align-items:center; gap:12px; margin-bottom:18px; flex-wrap:wrap; }
+        .filter-container label::after { content: ""; position: absolute; left: 50%; transform: translateX(-50%); bottom: -1px; width: 470px; height: 3px; background: linear-gradient(90deg, #d4af37, #07964e, #d4af37); border-radius: 50px; }
+        #product-container{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 6fr)); gap:28px; align-items:start; margin:8px auto 50px; max-width:1100px; padding:0 8px; }
+        .ph-card{ display:grid; grid-template-columns:1fr 1fr; gap:18px; background:linear-gradient(180deg, var(--paper) 0%, #ffffff 100%); border-radius:var(--card-radius); padding:10px; box-shadow:black 0 4px 15px rgba(6, 20, 8, 0.896); transition:0.35s ease; position:relative; border:1px solid rgba(6,20,8,0.04); }
+        .ph-card:hover{ transform:translateY(-8px); box-shadow:black 0 12px 30px rgba(6,20,8,0.12); }
+        .ph-image-wrap{ position:relative; padding:6px; display:flex; justify-content:center; align-items:center; }
+        .ph-image{ width:180px; height:180px; border-radius:14px; object-fit:cover; box-shadow:0 10px 25px rgba(2,30,10,0.12); transform:rotate(-2deg); border:1px solid rgba(0,0,0,0.03); background:#f5f7f3; }
+        .ph-image-deco{ position:absolute; left:10px; top:12px; width:130px; height:130px; border-radius:12px; background:linear-gradient(135deg,#fff,#f7fff8); transform:rotate(-4deg); z-index:-1; box-shadow:0 6px 20px rgba(6,18,8,0.05); border:1px solid rgba(0,0,0,0.02); }
+        .ph-content{ display:flex; flex-direction:column; justify-content:center; gap:8px; }
+        .ph-content h3{ margin:0; font-size:18px; color:var(--accent); }
+        .ph-content p{ margin:0; color:var(--muted); font-size:14px; line-height:1.45; max-height:3.6em; overflow:hidden; transition:max-height 0.35s ease; }
+ 
+        /* WHEN EXPANDED */
+        .ph-content p.expanded{ max-height:12em; }
+        /* META */
+        .ph-meta{ display:flex; align-items:center; gap:10px; margin-top:8px; flex-wrap:wrap; }
+        .ph-price{ background:rgba(14,174,94,0.08); padding:6px 10px; border-radius:999px; color:var(--accent); font-weight:600; font-size:14px; }
+        .ph-tag{ font-size:12px; color:#2b6b3a; background:#ecfff2; padding:5px 8px; border-radius:8px; }
+        .ph-cta{ margin-left:auto; }
+        .ph-btn{ background:var(--accent); color:white; border:none; padding:8px 14px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; text-decoration:none; box-shadow:0 6px 18px rgba(14,174,94,0.12); }
+
+        /* READ MORE BUTTON – MOBILE */
+        .read-more-btn{ display:none; }
+
+        /* DESKTOP: READ MORE HIDE */
+        @media (min-width:821px){
+        .read-more-btn{ display:none !important; }
+        .ph-content p{ max-height:none !important; }
+        }
+
+        /* MOBILE LAYOUT */
+        @media(max-width:820px){
+        #product-container{ grid-template-columns:1fr; }
+        .ph-card{ grid-template-columns:1fr; padding:14px; }
+        .ph-image{ width:100%; height:220px; transform:none; }
+        .ph-image-deco{ display:none; }
+        .ph-content p{ max-height:75px; }
+        .read-more-btn{ display:inline-block; color:var(--accent); background:none; border:none; margin-top:6px; font-weight:600; font-size:15px; cursor:pointer; }
+        }
+        
+        /* LAST ODD CARD CENTER */
+        .center-last{ grid-column:1 / -1; justify-self:center; max-width:740px; }
+        /* FALLBACK */
+        .loading-placeholder{ text-align:center; padding:30px; color:var(--muted); }
+
+    </style>
+</head>
+<body>
+
+    <!-- HEADER (kept unchanged) -->
+    <header class="site-header">
+    <div class="nav-container top-nav">
+
+        <!-- LEFT: BRAND -->
+        <div class="nav-left">
+        <a class="brand" href="index.html">
+            <span class="logo"><img src="{{ url_for('static', filename='img/pukhraj logo hd.jpg') }}" alt="Logo"></span>
+            <div class="brand-text">
+            <span class="brand-title">Pukhraj Herbal</span><br>
+            <span class="brand-sub">Natural · Trusted · Effective</span>
+            </div>
+        </a>
+        </div>
+
+        <!-- CENTER: NAV MENU -->
+        <div class="nav-center">
+        <nav class="main-nav">
+            <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li class="has-dropdown">
+                <a href="products.html" class="active">Products <span class="dropdown-arrow">▼</span></a>
+                <ul class="dropdown-menu">
+                <div id="navDynamic"></div>
+                </ul>
+            </li>
+            <li><a href="Quality.html">Quality Assurance</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        </div>
+
+        <!-- RIGHT: SOCIAL ICONS + SEARCH -->
+        <div class="nav-right">
+            <!-- SOCIAL ICONS -->
+            <div class="social-icons">
+                <a href="#" class="social-link facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
+                    <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.08 5.66 21.18 10.44 21.95v-6.74H8.08v-2.9h2.36V9.41c0-2.33 1.39-3.61 3.52-3.61.99 0 2.03.18 2.03.18v2.23h-1.14c-1.12 0-1.47.7-1.47 1.42v1.7h2.5l-.4 2.9h-2.1V22C18.34 21.18 22 17.08 22 12.07z"/>
+                </svg>
+                </a>
+
+                <a href="https://www.instagram.com/pukhraj_herbal_mandsaur/" class="social-link instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="#fff" stroke-width="1.2"/>
+                    <path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6z" stroke="#fff" stroke-width="1.2"/>
+                    <circle cx="18.5" cy="5.5" r="0.8" fill="#fff"/>
+                </svg>
+                </a>
+
+                <a href="#" class="social-link youtube">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M23 7.2a3 3 0 0 0-2.1-2.1C19.2 4.5 12 4.5 12 4.5s-7.2 0-8.9.6A3 3 0 0 0 .9 7.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .9 4.8 3 3 0 0 0 2.1 2.1C4.8 19.5 12 19.5 12 19.5s7.2 0 8.9-.6a3 3 0 0 0 2.1-2.1A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.9-4.8z" fill="#fff"/>
+                    <path d="M9.8 15.1V8.9l5.3 3.1-5.3 3.1z" fill="#000"/>
+                </svg>
+                </a>
+            </div>
+
+            <!-- SEARCH BAR -->
+            <div class="search-wrapper">
+                <span class="search-icon-circle">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search..." autocomplete="off">
+                <div id="suggestionBox" class="suggestions"></div>
+            </div>
+        </div>
+        <button class="nav-toggle">&#9776;</button>
+    </div>
+    </header>
+
+
+    <!-- HERO (unchanged) -->
+    <section style="height:55vh;background:linear-gradient(rgba(0, 0, 0, 0.419),rgba(0, 0, 0, 0.463)),url('img/oil 2.jpg') center/cover no-repeat fixed;display:flex;align-items:center;text-align:center;color:#fff;">
+        <div class="container" data-aos="fade">
+        <div class="hero-grid">
+            <div>
+                <span class="eyebrow">50+ Premium Products</span>
+                <h1 class="hero" style="text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.463);">Pure Herbal Extracts & Essential Oils</h1>
+                <p class="hero" style="text-shadow: 0 2px 5px rgba(0, 0, 0, 0.463);">
+                    GMP certified | Bulk Supply | Private Labeling | Export Ready
+                </p>
+                <div class="hero-cta">
+                    <a href="#quote-modal" class="btn btn-primary quote-trigger">Get Best Quote</a>
+                    <a href="contact.html" class="btn btn-outline">Request Catalog</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <!-- PRODUCTS PAGE – TIGHT ATTACHED CARDS (ULTRA PREMIUM) -->
+    <section class="all-products-section">
+        <div class="products-wrapper">
+
+            <!-- LEFT: CATEGORY LIST -->
+            <div class="category-list" data-aos="fade-right">
+                <h3>All Categories</h3>
+                <ul id="cat-list"></ul>
+            </div>
+
+            <!-- RIGHT: TIGHT PREMIUM GRID -->
+            <div class="products-display">
+                <h2 id="current-cat-title">All Products</h2>
+                <div id="product-grid" class="tight-grid"></div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
+
+        .all-products-section {padding: 90px 20px;background: linear-gradient(135deg, #f8fff9, #f0fdf4);font-family: 'Poppins', sans-serif;min-height: 100vh;}
+        .products-wrapper {max-width: 1500px;margin: 0 auto;display: grid;grid-template-columns: 290px 1fr;gap: 50px;}
+        /* LEFT CATEGORY LIST (same as before) */
+        .category-list {background: white;padding: 30px 24px;border-radius: 20px;box-shadow: 0 10px 30px rgba(10,100,60,0.09);height: fit-content;position: sticky;top: 100px;}
+        .category-list h3 { margin: 0 0 24px; font-size: 22px; color: #0a6d3a; text-align: center; font-weight: 700; }
+        #cat-list { list-style: none; padding: 0; margin: 0; }
+        #cat-list li {padding: 14px 18px; margin: 8px 0; background: #f5fdf7; border-radius: 12px;font-weight: 600; color: #0a5d33; cursor: pointer; transition: all 0.3s;border: 2px solid transparent;}
+        #cat-list li:hover, #cat-list li.active {background: #0eae5e; color: white; transform: translateX(6px); border-color: #0a7d3a;}
+        /* RIGHT SIDE */
+        .products-display h2 {font-size: 34px; color: #0a6d3a; margin: 0 0 35px; padding-bottom: 10px;border-bottom: 4px solid #0eae5e; display: inline-block; font-weight: 700;}
+        /* ULTRA TIGHT & ATTACHED GRID */
+        .tight-grid {display: grid;grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));gap: 0;border-radius: 20px;overflow: hidden;box-shadow: 0 20px 50px rgba(10,100,60,0.15);}
+        /* PREMIUM ATTACHED CARD */
+        .tight-card {position: relative;background: white;height: 360px;overflow: hidden;transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);border: 2px solid transparent;}
+        .tight-card:hover {transform: translateY(-16px) scale(1.02);z-index: 10;box-shadow: 0 30px 70px rgba(14,174,94,0.3);border-color: #0eae5e;}
+        .tight-card::before {content: '';position: absolute;inset: 0;background: linear-gradient(135deg, rgba(14,174,94,0.05), rgba(10,125,68,0.12));opacity: 0;transition: opacity 0.4s;z-index: 1;}
+        .tight-card:hover::before {opacity: 1;}
+        .tight-img {height: 190px;overflow: hidden;position: relative;}
+        .tight-img::after {content: 'PUKHRAJ HERBAL';position: absolute;bottom: 12px;right: 12px;background: rgba(255, 255, 255, 0.95);color: #0a6b3a;font-size: 9px;font-weight: 900;letter-spacing: 0.8px;text-transform: uppercase;padding: 4px 10px;border-radius: 100px;box-shadow: 0 6px 20px rgba(0,0,0,0.18);backdrop-filter: blur(8px);border: 2px solid #0eae5e;z-index: 5;pointer-events: none;transition: all 0.4s ease;}
+        .tight-card:hover .tight-img::after {background: white;transform: scale(1.08);box-shadow: 0 12px 35px rgba(14,174,94,0.4);border-color: #0a8c47;}
+        .tight-img img {width: 100%;height: 100%;object-fit: cover;transition: transform 0.8s ease;}
+        .tight-card:hover .tight-img img {transform: scale(1.18);}
+        .tight-body {position: relative;z-index: 2;padding: 20px;height: calc(100% - 190px);display: flex;flex-direction: column;justify-content: space-between;background: linear-gradient(to top, white 60%, rgba(255,255,255,0.95));}
+        .tight-body h3 {margin: 0 0 10px;font-size: 17px;font-weight: 700;color: #0a5d33;line-height: 1.3;display: -webkit-box;-webkit-line-clamp: 2;line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;}
+        .tight-body p {margin: 0 0 16px;font-size: 13.8px;color: #446655;line-height: 1.6;flex-grow: 1;display: -webkit-box;-webkit-line-clamp: 3;line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;}
+        .tight-price-btn {align-self: flex-start;padding: 11px 26px;background: linear-gradient(135deg, #0eae5e, #0a8c47);color: white;font-size: 13px;font-weight: 700;text-transform: uppercase;letter-spacing: 1.2px;border-radius: 50px;text-decoration: none;box-shadow: 0 8px 20px rgba(14,174,94,0.4);transition: all 0.4s ease;position: relative;overflow: hidden;}
+        .tight-price-btn::before {content: '';position: absolute;top: 0; left: -100%;width: 100%; height: 100%;background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);transition: left 0.7s;}
+        .tight-price-btn:hover::before {left: 100%;}
+        .tight-price-btn:hover {transform: translateY(-4px);box-shadow: 0 15px 30px rgba(14,174,94,0.5);}
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .products-wrapper { grid-template-columns: 1fr; gap: 40px; }
+            .category-list { position: static; max-width: 500px; margin: 0 auto; }
+            #cat-list { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+            #cat-list li { margin: 0; padding: 12px 20px; font-size: 14px; }
+        }
+
+        @media (max-width: 768px) {
+            .tight-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .tight-grid { grid-template-columns: 1fr; }
+            .tight-card { height: 380px; }
+        }
+    </style>
+
+    <script>
+    (function(){
+        function getImageUrl(img) {
+            if (!img) return "img/no-image.jpg";
+            if (img.startsWith("http") || img.startsWith("/uploads/")) return img;
+            return `http://127.0.0.1:5000/uploads/${img}`;
+        }
+        const API = "http://127.0.0.1:5000/products";
+        const catList = document.getElementById("cat-list");
+        const title = document.getElementById("current-cat-title");
+        const grid = document.getElementById("product-grid");
+        const pagination = document.createElement("div");  
+        pagination.className = "pagination";
+        pagination.style.textAlign = "center";
+        pagination.style.marginTop = "30px";
+
+        let allData = {};
+        let currentCat = localStorage.getItem("lastCategory") || null;
+        let currentPage = 1;
+        let productsPerPage = 15;  
+
+        function resolveImg(img) {
+            if (!img) return "img/no-image.jpg";
+            if (img.startsWith("http")) return img;
+            return `http://127.0.0.1:5000/uploads/${img}`;
+        }
+
+        function showProducts(catKey, page = 1) {
+            currentCat = catKey;
+            currentPage = page;
+            grid.innerHTML = "";
+            title.textContent = catKey === "all" ? "All Products" : catKey.replace(/-/g, " ").toUpperCase();
+
+            document.querySelectorAll("#cat-list li").forEach(li => {
+                li.classList.toggle("active", li.dataset.cat === catKey);
+            });
+
+            localStorage.setItem("lastCategory", catKey);
+
+            let products = catKey === "all" 
+                ? Object.values(allData).flat() 
+                : (allData[catKey] || []);
+
+            if (products.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:100px;font-size:19px;color:#666;background:white;border-radius:20px;">No products in this category yet.</div>`;
+                return;
+            }
+
+            const totalPages = Math.ceil(products.length / productsPerPage);
+            const start = (page - 1) * productsPerPage;
+            const end = start + productsPerPage;
+            products = products.slice(start, end);  
+
+            products.forEach(p => {
+                const img = resolveImg(p.image);
+                const desc = (p.description || "Premium quality herbal extract").substring(0, 110) + (p.description?.length > 110 ? "..." : "");
+
+                let productCatKey = catKey === "all" ? Object.keys(allData).find(key => allData[key].some(item => item.name === p.name)) : catKey;
+
+                grid.innerHTML += `
+                <div class="tight-card" onclick="window.location.href='category.html?cat=${productCatKey}&id=${p.id}'" style="cursor:pointer;">
+                    <div class="tight-img">
+                        <img src="${getImageUrl(p.image) || '/static/img/no-image.jpg'}" alt="${p.name}" 
+                            onerror="this.onerror=null; this.src='/static/img/no-image.jpg';">
+                    </div>
+                    <div class="tight-body">
+                        <h3>${p.name}</h3>
+                        <p>${desc}</p>
+                        <a href="contact.html#contact-form" class="tight-price-btn" onclick="event.stopPropagation();">
+                            Get Price
+                        </a>
+                    </div>
+                </div>`;
+            });
+
+            pagination.innerHTML = "";
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement("button");
+                btn.textContent = i;
+                btn.style.padding = "10px 15px";
+                btn.style.margin = "5px";
+                btn.style.borderRadius = "8px";
+                btn.style.border = "none";
+                btn.style.background = i === page ? "#0eae5e" : "#f0fdf4";
+                btn.style.color = i === page ? "white" : "#0a6d3a";
+                btn.style.cursor = "pointer";
+                btn.onclick = () => showProducts(catKey, i);
+                pagination.appendChild(btn);
+            }
+
+            grid.after(pagination);  
+        }
+
+        async function load() {
+            try {
+                const res = await fetch(API);
+                allData = await res.json();
+
+                const cats = Object.keys(allData).sort();
+                catList.innerHTML = `<li data-cat="all">All Products</li>`;
+                cats.forEach(cat => {
+                    const name = cat.replace(/-/g, " ").toUpperCase();
+                    catList.innerHTML += `<li data-cat="${cat}">${name}</li>`;
+                });
+
+                catList.addEventListener("click", e => {
+                    const li = e.target.closest("li");
+                    if (li) showProducts(li.dataset.cat, 1);  
+                });
+
+                const defaultCat = currentCat && allData[currentCat] ? currentCat : cats[0] || "all";
+                showProducts(defaultCat, 1);
+
+            } catch(err) {
+                console.error(err);
+                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:120px;color:red;font-size:18px;">Failed to load products</div>`;
+            }
+        }
+
+        load();
+    })();
+    </script>
+
+    <!-- CTA, footer etc (kept unchanged) -->
+    <section class="cta-section" data-aos="fade-up">
+        <div class="container">
+        <div class="cta-card">
+            <div>
+            <h3>Bulk Orders? Private Label?</h3>
+            <p class="muted">MOQ: 25 Kg | Custom Packaging | Fast Delivery</p>
+            </div>
+            <div>
+            <a href="#quote-modal" class="btn btn-primary">Get Quote Now</a>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/917694011031?text=Hi%20Pukhraj%20Herbal,%20I%20want%20to%20discuss%20bulk%20supply" target="_blank" rel="noopener">
+        <img src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="WhatsApp" loading="lazy">
+        </a>
+    </div>
+
+    <button id="backToTopBtn" title="Go to top">↑</button>
+
+    <footer class="site-footer" style="background:#0a3d2a; color:#fff; padding:80px 10px;">
+        <div class="container footer-grid" style="grid-template-columns:1fr 1fr 1.3fr; gap:10px;">
+        <div class="footer-col">
+            <h4 style="color:#fff; font-size:15px;">Pukhraj Herbal</h4>
+            <p style="opacity:0.9; line-height:1.7; padding-top: 19px;" >GMP Certified Manufacturer of Herbal Extracts,
+                Essential Oils & Ayurvedic Products from Mandsaur, MP.</p>
+        </div>
+        <div class="footer-col">
+            <h5>Quick Links</h5>
+            <ul class="footer-links">
+            <ul style="list-style:none; padding:0; margin:15px 0;">
+            <li><a href="about.html" style="color:#ccc; text-decoration:none;">About Us</a></li>
+            <li><a href="products.html" style="color:#ccc; text-decoration:none;">Products</a></li>
+            <li><a href="gallery.html" style="color:#ccc; text-decoration:none;">Gallery</a></li>
+            <li><a href="contact.html" style="color:#ccc; text-decoration:none;">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Contact</h5>
+            <p style="opacity:0.9; padding-top: 10px">
+            <strong>Email:</strong> pukhraj1207@gmail.com<br>
+            <strong>Call:</strong> +91 76940 11031, 94251 05058<br>
+            <strong>GST:</strong> 23ADDPP6014F1ZZ
+            </p>
+        </div>
+        </div>
+        <div class="container text-center" style="margin-top:40px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1);">
+            <p style="opacity:0.7; font-size:14px;">© 2025 Pukhraj Herbal. Made with care • Terms • Privacy</p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+    const API_BASE = "http://127.0.0.1:5000/products";
+    const productContainer = document.getElementById("product-container");
+    const filterSelect = document.getElementById("categoryFilter");
+
+    if (!productContainer) {
+        console.error("product-container element not found");
+        return;
+    }
+
+    // --- helpers ---
+    function resolveImagePath(img) {
+        if (!img) return "img/no-image.jpg";
+        if (img.startsWith("/uploads/")) {
+            return "http://127.0.0.1:5000" + img;
+        }
+        if (/^https?:\/\//i.test(img)) return img;
+        if (!img.includes("/")) return `img/${img}`;
+        return img;
+    }
+
+    function formatPrice(p) {
+        if (!p || p === "") return "Price on request";
+        if (typeof p === "string") return p;
+        if (typeof p === "number") return `₹${p}`;
+        return String(p);
+    }
+
+    // ✅ redirect function
+    function openProduct(category, id) {
+        window.location.href = `category.html?cat=${encodeURIComponent(category)}&id=${id}`;
+    }
+    // Create card
+    function createCardElem(product, categoryLabel) {
+        const wrapper = document.createElement("article");
+        wrapper.className = "ph-card";
+        wrapper.style.cursor = "pointer";
+
+        // ✅ onclick added
+        wrapper.onclick = function () {
+                window.location.href = `category.html?cat=${encodeURIComponent(product.category)}&id=${product.id}`;
+            };
+        // image
+        const imgWrap = document.createElement("div");
+        imgWrap.className = "ph-image-wrap";
+
+        const img = document.createElement("img");
+        img.className = "ph-image";
+        img.alt = product.name || "Product";
+        img.loading = "lazy";
+        img.src = resolveImagePath(product.image) || "/static/img/no-image.jpg";
+        img.onerror = function () { 
+            this.onerror = null; 
+            this.src = "/static/img/no-image.jpg"; 
+        };
+
+        imgWrap.appendChild(img);
+
+        // content
+        const content = document.createElement("div");
+        content.className = "ph-content";
+
+        const h3 = document.createElement("h3");
+        h3.textContent = product.name || "Unnamed product";
+
+        const desc = document.createElement("p");
+        desc.textContent = product.description || "";
+
+        // price + tag
+        const meta = document.createElement("div");
+        meta.className = "ph-meta";
+
+        const price = document.createElement("div");
+        price.className = "ph-price";
+        price.textContent = formatPrice(product.price);
+
+        const tag = document.createElement("div");
+        tag.className = "ph-tag";
+        tag.textContent = categoryLabel || product.category;
+
+        // CTA
+        const btn = document.createElement("a");
+        btn.className = "ph-btn";
+        btn.href = "contact.html";
+        btn.innerText = "Get Quote";
+        btn.onclick = function (e) {
+            e.stopPropagation(); // ✅ page click se alag rahe
+        };
+
+        meta.appendChild(price);
+        meta.appendChild(tag);
+        meta.appendChild(btn);
+
+        content.appendChild(h3);
+        content.appendChild(desc);
+        content.appendChild(meta);
+
+        wrapper.appendChild(imgWrap);
+        wrapper.appendChild(content);
+
+        return wrapper;
+    }
+
+    // Render
+    function renderProducts(products = [], categoryLabel = "All") {
+        productContainer.innerHTML = "";
+
+        if (!products.length) {
+            productContainer.innerHTML = '<div class="loading-placeholder">No products found.</div>';
+            return;
+        }
+
+        products.forEach(p => {
+            const el = createCardElem(p, categoryLabel);
+            productContainer.appendChild(el);
+        });
+    }
+
+    // Load all
+    async function loadAllProducts() {
+        productContainer.innerHTML = "<p>Loading…</p>";
+        try {
+            const res = await fetch(API_BASE);
+            const data = await res.json();
+
+            let products = [];
+            for (const cat in data) {
+                if (Array.isArray(data[cat])) {
+                    products = products.concat(data[cat]);
+                }
+            }
+            renderProducts(products, "All");
+
+        } catch (e) {
+            console.error(e);
+            productContainer.innerHTML = "<p style='color:red'>Failed to load products.</p>";
+        }
+    }
+
+    // Load category
+    async function loadCategory(category) {
+        productContainer.innerHTML = "<p>Loading…</p>";
+        try {
+            const res = await fetch(`${API_BASE}/${encodeURIComponent(category)}`);
+            const arr = await res.json();
+            const products = Array.isArray(arr) ? arr : [];
+            renderProducts(products, category);
+        } catch (e) {
+            console.error(e);
+            productContainer.innerHTML = "<p style='color:red'>Failed to load products.</p>";
+        }
+    }
+
+    // Main loader
+    function loadProducts(category = "all") {
+        if (category === "all") loadAllProducts();
+        else loadCategory(category);
+    }
+
+    // Filter change
+    if (filterSelect) {
+        filterSelect.addEventListener("change", (e) => {
+            loadProducts(e.target.value || "all");
+        });
+    }
+
+    // Initial
+    document.addEventListener("DOMContentLoaded", () => {
+        const val = filterSelect ? filterSelect.value : "all";
+        loadProducts(val);
+    });
+
+    })();
+
+    // === SEARCH FILTER AFTER PRODUCTS LOAD ===
+    function applySearchFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        const searchQuery = params.get("search");
+
+        if (!searchQuery) return;
+
+        // Put in search bar also (optional)
+        const navSearch = document.getElementById("navSearch");
+        if (navSearch) navSearch.value = searchQuery;
+
+        // Wait until product cards are loaded
+        let tries = 0;
+        const interval = setInterval(() => {
+            const cards = document.querySelectorAll(".product-card, .g-card, article.product-card");
+            
+            if (cards.length > 0 || tries > 20) {
+                clearInterval(interval);
+                filterProducts(searchQuery.toLowerCase());
+            }
+
+            tries++;
+        }, 200);
+    }
+
+    document.addEventListener("DOMContentLoaded", applySearchFromURL);
+
+    const API = "http://127.0.0.1:5000/products";
+
+    function getParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            category: params.get("category"),
+            id: params.get("id")
+        };
+    }
+
+    async function highlightSelectedProduct() {
+        const { category, id } = getParams();
+        if (!category || !id) return;
+
+        try {
+            const res = await fetch(`${API}/${category}`);
+            const products = await res.json();
+
+            const container = document.getElementById("product-container");
+            container.innerHTML = "";
+
+            const sideList = document.createElement("div");
+            sideList.style.position = "sticky";
+            sideList.style.top = "20px";
+            sideList.style.maxWidth = "250px";
+            sideList.style.padding = "15px";
+            sideList.style.background = "#f8f8f8";
+            sideList.style.borderRadius = "12px";
+
+            sideList.innerHTML = `<h4 style="color:#0eae5e;margin-bottom:10px;">More in this category</h4>`;
+
+            const mainBox = document.createElement("div");
+            mainBox.style.flex = "1";
+
+            const wrapper = document.createElement("div");
+            wrapper.style.display = "flex";
+            wrapper.style.gap = "30px";
+
+            products.forEach(p => {
+                if (String(p.id) === String(id)) {
+                    const div = document.createElement("div");
+                    div.id = "highlight-box";
+                    div.style.border = "3px solid #0eae5e";
+                    div.style.borderRadius = "16px";
+                    div.style.padding = "20px";
+                    div.style.background = "#fff";
+                    div.style.boxShadow = "0 6px 18px rgba(0,0,0,0.1)";
+                    
+                    div.innerHTML = `
+                        <img src="${p.image}" style="width:100%;max-height:300px;object-fit:cover;border-radius:12px;margin-bottom:15px;">
+                        <h2 style="color:#0eae5e;">${p.name}</h2>
+                        <p>${p.description}</p>
+                    `;
+                    mainBox.appendChild(div);
+                } else {
+                    const item = document.createElement("div");
+                    item.textContent = p.name;
+                    item.style.padding = "8px 0";
+                    item.style.cursor = "pointer";
+                    item.style.color = "#444";
+
+                    item.onclick = () => {
+                        window.location.href = `products.html?category=${category}&id=${p.id}`;
+                    };
+
+                    sideList.appendChild(item);
+                }
+            });
+
+            wrapper.appendChild(mainBox);
+            wrapper.appendChild(sideList);
+            container.appendChild(wrapper);
+
+            setTimeout(() => {
+                const box = document.getElementById("highlight-box");
+                if (box) {
+                    box.scrollIntoView({ behavior:"smooth", block:"center" });
+                }
+            }, 300);
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    highlightSelectedProduct();
+
+
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/aos-custom.js') }}"></script>
+</body>
+</html>
