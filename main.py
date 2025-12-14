@@ -8,8 +8,9 @@ from flask import Flask, render_template, request, jsonify, send_from_directory,
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from uuid import uuid4
-from datetime import timezone  
+from datetime import timezone  # FIXED deprecation
 
+# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,7 @@ CORS(app, supports_credentials=True, origins=["*"])
 
 SECRET_KEY = os.environ.get("JWT_SECRET", "PUKHRAJ_SUPER_SECRET_KEY_2025_CHANGE_THIS")
 
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "static", "uploads")
+UPLOAD_DIR = "/data/static/uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @app.route('/uploads/<filename>')
@@ -30,13 +31,13 @@ def uploads_old(filename):
 def static_uploads(filename):
     return send_from_directory(UPLOAD_DIR, filename)
 
-@app.route('/static/uploads/<filename>') 
+@app.route('/static/uploads/<filename>')  # Dono tarah se kaam karega
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_DIR, filename)
 
 # Database connection
 def get_db():
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("/data/database.db")
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -287,6 +288,7 @@ def delete_product(pid):
         conn.close()
 
 if __name__ == "__main__":
+    # Fast server (no auto restart lag)
     from waitress import serve
     print("Pukhraj Herbal Admin LIVE → http://127.0.0.1:5000/admin-login")
     print("Username: admin | Password: admin123")
