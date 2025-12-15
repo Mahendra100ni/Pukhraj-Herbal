@@ -135,6 +135,9 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+from PIL import Image  # Ye top pe imports mein add kar de
+import io
+
 @app.route("/upload", methods=["POST"])
 def upload():
     file = request.files.get("file") or request.files.get("imageFile")
@@ -147,9 +150,21 @@ def upload():
     if not file.mimetype.startswith('image/'):
         return jsonify({"error": "Only images allowed"}), 400
 
+    original = file.read()
+    img = Image.open(io.BytesIO(original))
+    
+    max_size = 1200
+    if img.width > max_size:
+        ratio = max_size / img.width
+        new_height = int(img.height * ratio)
+        img = img.resize((max_size, new_height), Image.LANCZOS) 
+    
     filename = secure_filename(f"{uuid4().hex}_{file.filename}")
     filepath = os.path.join(UPLOAD_DIR, filename)
-    file.save(filepath)
+    
+    img.save(filepath, optimize=True, quality=85)  
+    if img.format == "PNG":
+        img.save(filepath, optimize=True)
     
     return jsonify({
         "url": f"/static/uploads/{filename}",
@@ -293,3 +308,4 @@ if __name__ == "__main__":
     print("Pukhraj Herbal Admin LIVE → http://127.0.0.1:5000/admin-login")
     print("Username: admin | Password: admin123")
     serve(app, host="127.0.0.1", port=5000)
+
