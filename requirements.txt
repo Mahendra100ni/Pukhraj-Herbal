@@ -2,4 +2,5 @@ Flask
 Flask-CORS
 waitress
 werkzeug
+Pillow
 PyJWT
