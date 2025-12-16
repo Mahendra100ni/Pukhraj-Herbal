@@ -3,12 +3,14 @@ import jwt
 import datetime
 import os
 import json
+import io
 import logging
+from PIL import Image
 from flask import Flask, render_template, request, jsonify, send_from_directory, session, redirect
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from uuid import uuid4
-from datetime import timezone  # FIXED deprecation
+from datetime import timezone
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -134,9 +136,6 @@ from werkzeug.utils import secure_filename
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-from PIL import Image  # Ye top pe imports mein add kar de
-import io
 
 @app.route("/upload", methods=["POST"])
 def upload():
@@ -308,5 +307,6 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000)) 
     print("Pukhraj Herbal Admin LIVE → http://0.0.0.0:" + str(port) + "/admin-login")
     serve(app, host="0.0.0.0", port=port)
+
 
 
