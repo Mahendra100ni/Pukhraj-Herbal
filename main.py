@@ -301,13 +301,6 @@ def delete_product(pid):
     finally:
         conn.close()
 
-if **name** == "**main**":
-    from waitress import serve
-    import os
-    port = int(os.environ.get("PORT", 5000))
-    host = "0.0.0.0" # Explicitly set
-    print(f"Pukhraj Herbal Admin starting on http://{host}:{port}/admin-login")
-    serve(app, host=host, port=port, url_scheme='https')
 
 
 
