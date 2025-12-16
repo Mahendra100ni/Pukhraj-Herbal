@@ -4,3 +4,4 @@ waitress
 werkzeug
 Pillow
 PyJWT
+gunicorn
