@@ -316,7 +316,7 @@ function uploadSetup(zone, inputId, gallery=false) {
             // Upload
             const form = new FormData();
             form.append("file", file);  // Yeh "file" naam se bhej raha hai
-            const res = await fetch(`${API}/upload`, {method:"POST", body:form});
+            const res = await fetch(`${API}/upload`, {method:"POST", body:form, credentials: "include"});
             const data = await res.json();
             if (data.url) {
                 const fname = data.url.split('/').pop();
@@ -356,18 +356,18 @@ document.getElementById("save").onclick = async () => {
         method,
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(payload)
+        credentials: "include"
     });
 
     if (res.ok) {
         toast(selected?.id ? "Product Updated!" : "Product Added!");
         
-        // FORM PURA KHALI KAR DO
         selected = null;
         document.getElementById("title").textContent = "Add New Product";
         document.getElementById("name").value = "";
         document.getElementById("desc").value = "";
         document.getElementById("spec").value = "";
-        document.getElementById("cat").value = "";  // Dropdown bhi khali
+        document.getElementById("cat").value = ""; 
         document.getElementById("latest").checked = false;
         document.getElementById("mainPrev").style.display = "none";
         document.getElementById("mainPrev").src = "";
@@ -375,8 +375,8 @@ document.getElementById("save").onclick = async () => {
         document.getElementById("gal").innerHTML = "";
         document.getElementById("del").style.display = "none";
         
-        load();  // List refresh
-        preview();  // Live preview reset
+        load(); 
+        preview(); 
     } else {
         toast("Save failed!");
     }
@@ -385,7 +385,7 @@ document.getElementById("save").onclick = async () => {
 // Delete
 document.getElementById("del").onclick = async () => {
     if (!confirm("Delete this product?")) return;
-    await fetch(`${API}/products/${selected.id}`, {method: "DELETE"});
+    await fetch(`${API}/products/${selected.id}`, {method: "DELETE", credentials: "include"});
     toast("Deleted!");
     selected = null; load();
     document.getElementById("title").textContent = "Add New Product";
@@ -417,3 +417,4 @@ load();
 </body>
 
 </html>
+
