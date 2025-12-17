@@ -70,12 +70,16 @@ def init_db():
     cur.execute("SELECT COUNT(*) FROM admins")
     count = cur.fetchone()[0]
     if count == 0:
-        from werkzeug.security import generate_password_hash 
+        from werkzeug.security import generate_password_hash
         hashed = generate_password_hash("Pukhraj@4321")
         cur.execute("INSERT INTO admins (username, password) VALUES (?, ?)", ("admin", hashed))
         print("First admin created with password: Pukhraj@4321")
     else:
-        print(f"{count} admin(s) already exist — no reset!")
+        # Force update admin password if exists
+        from werkzeug.security import generate_password_hash
+        hashed = generate_password_hash("Pukhraj@4321")
+        cur.execute("UPDATE admins SET password = ? WHERE username = ?", (hashed, "admin"))
+        print("Admin password updated to Pukhraj@4321!")
     
     conn.commit()
     conn.close()
@@ -301,6 +305,7 @@ def delete_product(pid):
         return jsonify({"error": "Failed to delete"}), 500
     finally:
         conn.close()
+
 
 
 
