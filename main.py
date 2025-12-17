@@ -8,7 +8,7 @@ import logging
 from PIL import Image
 from flask import Flask, render_template, request, jsonify, send_from_directory, session, redirect
 from flask_cors import CORS
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from uuid import uuid4
 from datetime import timezone
 
@@ -300,6 +300,7 @@ def delete_product(pid):
         return jsonify({"error": "Failed to delete"}), 500
     finally:
         conn.close()
+
 
 
 
