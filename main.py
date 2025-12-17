@@ -70,10 +70,10 @@ def init_db():
     cur.execute("SELECT COUNT(*) FROM admins")
     count = cur.fetchone()[0]
     if count == 0:
-        # Pre-computed hash for password "Pukhraj@4321" (safe to keep in code)
-        hashed = "pbkdf2:sha256:100000$450b72d21dfa7d1c18b8290c0d894e907ff8c4a228c15e6553cb88f98a3f3dde"
+        from werkzeug.security import generate_password_hash  
+        hashed = generate_password_hash("Pukhraj@4321")
         cur.execute("INSERT INTO admins (username, password) VALUES (?, ?)", ("admin", hashed))
-        print("First admin created with hidden password!")
+        print("First admin created with password: Pukhraj@4321")
     else:
         print(f"{count} admin(s) already exist — no reset!")
     
@@ -301,6 +301,7 @@ def delete_product(pid):
         return jsonify({"error": "Failed to delete"}), 500
     finally:
         conn.close()
+
 
 
 
